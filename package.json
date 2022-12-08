@@ -1,14 +1,14 @@
 {
-  "name": "minisketch-wasm",
+  "name": "libminisketch-wasm",
   "version": "0.1.0",
-  "description": "minisketch-wasm wasm build for set reconciliation",
+  "description": "libminisketch-wasm wasm build for set reconciliation",
   "main": "lib/index.js",
   "scripts": {
     "build:emscripten": "bash scripts/compile.sh",
     "build:tsc": "tsc",
     "build": "npm-run-all build:emscripten build:tsc"
   },
-  "repository": "https://github.com/zerodao-finance/minisketch-wasm",
+  "repository": "https://github.com/zerodao-finance/libminisketch-wasm",
   "author": "altinak",
   "license": "MIT",
   "private": false,
