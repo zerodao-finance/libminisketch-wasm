@@ -1,0 +1,6 @@
+[submodule "minisketch"]
+	path = minisketch
+	url = https://github.com/sipa/minisketch
+[submodule "emsdk"]
+	path = emsdk
+	url = https://github.com/emscripten-core/emsdk
