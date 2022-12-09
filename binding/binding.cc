@@ -34,15 +34,16 @@ public:
      minisketch_add_uint64(sketch, i);
   }
   void Deserialize(std::string serialized) {
-    minisketch_deserialize(sketch, serialized.to_cstr());
+    minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
   }
   void Merge(MinisketchWrapper *other_sketch) {
     minisketch_merge(sketch, other_sketch->sketch);
   }
   std::vector<unsigned long> decode(unsigned int max_elements) {
-    unsigned long *buffer = new unsigned long[](max_elements);
+    unsigned long *buffer = new unsigned long[max_elements];
+    std::vector<unsigned long> result_(buffer, buffer + max_elements);;
     minisketch_decode(sketch, max_elements, (uint64_t *) buffer);
-    return std::vector<unsigned long>((unsigned long *) buffer);
+    return result_;
   }
 private:
   int field_size;
@@ -57,6 +58,7 @@ EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
     .constructor<int, int, int>()
     .function("addUint", &MinisketchWrapper::AddUint)
     .function("serialize", &MinisketchWrapper::Serialize)
-    .function("destroySerialized", &MinisketchWrapper::DestroySerialized);
+    .function("destroySerialized", &MinisketchWrapper::DestroySerialized)
     .function("deserialize", &MinisketchWrapper::Deserialize)
+    .function("merge", &Minisketch::Merge);
 }
