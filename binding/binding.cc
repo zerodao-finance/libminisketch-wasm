@@ -39,11 +39,13 @@ public:
   void Merge(MinisketchWrapper *other_sketch) {
     minisketch_merge(sketch, other_sketch->sketch);
   }
-  std::vector<unsigned long> decode(unsigned int max_elements) {
-    unsigned long *buffer = new unsigned long[max_elements];
-    std::vector<unsigned long> result_(buffer, buffer + max_elements);;
-    minisketch_decode(sketch, max_elements, (uint64_t *) buffer);
-    return result_;
+  val Decode(unsigned int max_elements) {
+    uint64_t *buffer = new uint64_t[max_elements];
+    minisketch_decode(sketch, max_elements, buffer);
+    return val(typed_memory_view(max_elements * 8, (unsigned char *) buffer));
+  }
+  MinisketchWrapper *This() {
+    return this;
   }
 private:
   int field_size;
@@ -60,5 +62,7 @@ EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
     .function("serialize", &MinisketchWrapper::Serialize)
     .function("destroySerialized", &MinisketchWrapper::DestroySerialized)
     .function("deserialize", &MinisketchWrapper::Deserialize)
-    .function("merge", &Minisketch::Merge);
+    .function("merge", &MinisketchWrapper::Merge, allow_raw_pointers())
+    .function("getPointer", &MinisketchWrapper::This, allow_raw_pointers())
+    .function("decode", &MinisketchWrapper::Decode);
 }

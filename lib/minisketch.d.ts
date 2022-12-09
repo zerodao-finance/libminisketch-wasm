@@ -1,8 +1,10 @@
 /// <reference types="node" />
-import { MinisketchWrapper } from "../build/libminisketch";
 import { Buffer } from "buffer";
 export declare class Minisketch {
-    _binding: MinisketchWrapper;
+    _binding: any;
+    deserialize(input: Buffer): void;
+    merge(other: Minisketch): void;
+    decode(maxElements: number): any;
     constructor({ fieldSize, implementation, capacity }: {
         fieldSize: any;
         implementation?: number;

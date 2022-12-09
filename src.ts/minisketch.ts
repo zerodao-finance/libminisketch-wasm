@@ -1,14 +1,23 @@
-import { MinisketchWrapper } from "../build/libminisketch";
 import { Buffer } from "buffer";
+const build = require("../build/libminisketch");
 
 export class Minisketch {
-  public _binding: MinisketchWrapper;
+  public _binding: any;
+  deserialize(input: Buffer) {
+    this._binding.deserialize(input.buffer);
+  }
+  merge(other: Minisketch) {
+    this._binding.merge(other._binding.getPointer());
+  }
+  decode(maxElements: number) {
+    return this._binding.decode(maxElements);
+  }
   constructor({
     fieldSize,
     implementation = 0,
     capacity
   }) {
-    this._binding = new MinisketchWrapper(fieldSize, implementation, capacity);
+    this._binding = new build.MinisketchWrapper(fieldSize, implementation, capacity);
   }
   serialize() {
     const result = Buffer.from(Array.from(this._binding.serialize()) as any);
