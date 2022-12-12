@@ -1,3 +1,3 @@
 #!/bin/bash
-bash compile-deps.sh
-bash compile-binding.sh
+bash scripts/compile-deps.sh
+bash scripts/compile-binding.sh

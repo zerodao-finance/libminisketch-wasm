@@ -3,6 +3,19 @@ const build = require("../build/libminisketch");
 
 export class Minisketch {
   public _binding: any;
+  static async create(opts: {
+    fieldSize: any;
+    implementation?: any;
+    capacity: any;
+  }) {
+    return new this(
+      new (await build()).MinisketchWrapper(
+        opts.fieldSize,
+        opts.implementation || 0,
+        opts.capacity
+      )
+    );
+  }
   deserialize(input: Buffer) {
     this._binding.deserialize(input.buffer);
   }
@@ -12,12 +25,8 @@ export class Minisketch {
   decode(maxElements: number) {
     return this._binding.decode(maxElements);
   }
-  constructor({
-    fieldSize,
-    implementation = 0,
-    capacity
-  }) {
-    this._binding = new build.MinisketchWrapper(fieldSize, implementation, capacity);
+  constructor(binding: any) {
+    this._binding = binding;
   }
   serialize() {
     const result = Buffer.from(Array.from(this._binding.serialize()) as any);
@@ -27,7 +36,10 @@ export class Minisketch {
   destroy() {
     this._binding.destroy();
   }
-  addUint(i) {
+  getPointer() {
+    this._binding.getPointer();
+  }
+  addUint(i: Number) {
     this._binding.addUint(i);
   }
-} 
+}

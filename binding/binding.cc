@@ -11,17 +11,11 @@ public:
   MinisketchWrapper(int field_size_, int implementation_number_, int capacity_) : field_size(field_size_), implementation_number(implementation_number_), capacity(capacity_) {
     sketch = minisketch_create(field_size_, implementation_number_, capacity_);
   }
-  int GetFieldSize() { return field_size; }
-  int GetImplementationNumber() { return implementation_number; }
-  int GetCapacity() { return capacity; }
-  void SetFieldSize(int field_size_) { field_size = field_size_; }
-  void SetCapacity(int capacity_) { capacity = capacity_; }
-  void SetImplementationNumber(int implementation_number_) { implementation_number = implementation_number_; }
   void Destroy() {
     minisketch_destroy(sketch);
   }
   val Serialize() {
-    int len = minisketch_serialized_size(sketch);
+    size_t len = minisketch_serialized_size(sketch);
     last_serialized = (unsigned char *) malloc(len);
     minisketch_serialize(sketch, last_serialized);
     return val(typed_memory_view(len, last_serialized));
@@ -64,5 +58,6 @@ EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
     .function("deserialize", &MinisketchWrapper::Deserialize)
     .function("merge", &MinisketchWrapper::Merge, allow_raw_pointers())
     .function("getPointer", &MinisketchWrapper::This, allow_raw_pointers())
-    .function("decode", &MinisketchWrapper::Decode);
+    .function("decode", &MinisketchWrapper::Decode)
+    .function("destroy", &MinisketchWrapper::Destroy);
 }
