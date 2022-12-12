@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(libminisketch-wasm)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 enable_language(C)
 enable_language(CXX)
 
