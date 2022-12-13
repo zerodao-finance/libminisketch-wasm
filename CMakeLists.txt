@@ -15,11 +15,14 @@ endif()
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/binding
+    ${PROJECT_SOURCE_DIR}/minisketch/src
+    ${PROJECT_SOURCE_DIR}/minisketch/.libs
+    ${PROJECT_SOURCE_DIR}/minisketch/include
     )
 
 add_library(
     libminisketch-wasm
-    binding/binding.cc
+    binding/minisketchwrapper.cc
     )
 
 set(GOOGLETEST_ROOT tests/googletest/googletest CACHE STRING "Google Test source root")
@@ -43,6 +46,7 @@ foreach(_source ${GOOGLETEST_SOURCES})
     set_source_files_properties(${_source} PROPERTIES GENERATED 1)
 endforeach()
 
+
 add_library(googletest ${GOOGLETEST_SOURCES})
 
 add_executable(
@@ -54,10 +58,9 @@ add_dependencies(bindings-test googletest)
 
 target_link_libraries(
     bindings-test
-    emscripten
     googletest
+    ${PROJECT_SOURCE_DIR}/minisketch/.libs/libminisketch.a
     libminisketch-wasm
-    libminisketch
     pthread
     )
 

@@ -1,4 +1,4 @@
-#include "../binding/binding.cc"
+#include "../binding/minisketchwrapper.cc"
 #include "gtest/gtest.h"
 
 
