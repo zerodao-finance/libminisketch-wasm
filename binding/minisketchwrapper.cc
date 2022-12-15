@@ -35,7 +35,8 @@ public:
   val Decode() {
     uint64_t *buffer = new uint64_t[capacity + 1];
     ssize_t num_differences = minisketch_decode(sketch, capacity, buffer);
-    buffer[capacity] = uint64_t(num_differences);
+    if(num_differences < 0) buffer[capacity] = uint64_t(capacity+1);
+    else buffer[capacity] = uint64_t(num_differences);
     return val(typed_memory_view((capacity+1) * 8, (unsigned char *) buffer));
   }
   MinisketchWrapper *This() {
