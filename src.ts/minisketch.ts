@@ -9,7 +9,7 @@ export class Minisketch {
     capacity: any;
   }) {
     return new this(
-      new (await build()).MinisketchWrapper(
+      new build.MinisketchWrapper(
         opts.fieldSize,
         opts.implementation || 0,
         opts.capacity
@@ -37,7 +37,7 @@ export class Minisketch {
     this._binding.destroy();
   }
   getPointer(): any {
-    this._binding.getPointer();
+    return this._binding.getPointer();
   }
   addUint(i: Number) {
     this._binding.addUint(i);
