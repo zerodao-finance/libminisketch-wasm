@@ -22,8 +22,8 @@ export class Minisketch {
   merge(other: Minisketch) {
     this._binding.merge(other._binding.getPointer());
   }
-  decode(maxElements: number) {
-    return this._binding.decode(maxElements);
+  decode() {
+    return this._binding.decode();
   }
   constructor(binding: any) {
     this._binding = binding;
@@ -36,7 +36,7 @@ export class Minisketch {
   destroy() {
     this._binding.destroy();
   }
-  getPointer() {
+  getPointer(): any {
     this._binding.getPointer();
   }
   addUint(i: Number) {

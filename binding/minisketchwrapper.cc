@@ -30,12 +30,13 @@ public:
     minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
   }
   void Merge(MinisketchWrapper *other_sketch) {
-    minisketch_merge(sketch, other_sketch->sketch);
+    //minisketch_merge(sketch, other_sketch->sketch);
   }
-  val Decode(unsigned int max_elements) {
-    uint64_t *buffer = new uint64_t[max_elements];
-    minisketch_decode(sketch, max_elements, buffer);
-    return val(typed_memory_view(max_elements * 8, (unsigned char *) buffer));
+  val Decode() {
+    uint64_t *buffer = new uint64_t[capacity + 1];
+    ssize_t num_differences = minisketch_decode(sketch, capacity, buffer);
+    buffer[capacity] = uint64_t(num_differences);
+    return val(typed_memory_view((capacity+1) * 8, (unsigned char *) buffer));
   }
   MinisketchWrapper *This() {
     return this;

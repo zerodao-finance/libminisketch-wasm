@@ -1,18 +1,23 @@
 import { Minisketch } from "../src.ts/minisketch";
 
 describe("bindings", () => {
-  let sketch: Minisketch;
+  let sketch_a: Minisketch, sketch_b: Minisketch;
   before(async () => {
-    sketch = await Minisketch.create({
-      fieldSize: 12,
+    sketch_a = await Minisketch.create({
+      fieldSize: 64,
       capacity: 5,
     });
-    setTimeout(() => {}, 5000);
+    sketch_b = await Minisketch.create({
+      fieldSize: 64,
+      capacity: 5,
+    });
   });
   it("should test lib loading", async () => {
-    sketch.getPointer();
-    sketch.addUint(3002);
-    console.log(sketch.serialize());
-    sketch.destroy();
+    sketch_a.addUint(3001);
+    sketch_a.addUint(3002);
+    sketch_b.addUint(3001);
+    sketch_b.merge(sketch_a);
+    console.log(sketch_b.decode());
+    const serialized = sketch_a.serialize();
   });
 });

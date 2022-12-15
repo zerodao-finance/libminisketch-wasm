@@ -4,6 +4,9 @@
 
 namespace {
   TEST(minisketchWrapper, pointer) {
+    MinisketchWrapper sketch_a(64, 0, 5);
+    MinisketchWrapper sketch_b(64, 0, 5);
+    sketch_a.Merge(sketch_b.This());
   }
 }
 

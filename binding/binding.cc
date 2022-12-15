@@ -2,7 +2,7 @@
 #include <emscripten/bind.h>
 #include <string>
 #include <vector>
-#include <minisketchwrapper.cc>
+#include "minisketchwrapper.cc"
 
 using namespace emscripten;
 
