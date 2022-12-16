@@ -9,10 +9,10 @@ export declare class Minisketch {
     }): Promise<Minisketch>;
     deserialize(input: Buffer): void;
     merge(other: Minisketch): void;
-    decode(maxElements: number): any;
+    decode(): any;
     constructor(binding: any);
     serialize(): Buffer;
     destroy(): void;
-    getPointer(): void;
-    addUint(i: Number): void;
+    getPointer(): any;
+    addUint(i: String | Number): void;
 }

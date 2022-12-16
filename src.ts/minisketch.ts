@@ -39,7 +39,7 @@ export class Minisketch {
   getPointer(): any {
     return this._binding.getPointer();
   }
-  addUint(i: Number) {
+  addUint(i: String | Number) {
     this._binding.addUint(i);
   }
 }
