@@ -23,7 +23,8 @@ public:
     if (last_serialized) free(last_serialized);
     last_serialized = (unsigned char *) 0;
   }
-  void AddUint(unsigned long i) {
+  void AddUint(std::string s) {
+     unsigned long long i = std::stoull(s);
      minisketch_add_uint64(sketch, i);
   }
   void Deserialize(std::string serialized) {
