@@ -1,12 +1,15 @@
 #include "../binding/minisketchwrapper.cc"
 #include "gtest/gtest.h"
+#include <string>
 
 
 namespace {
   TEST(minisketchWrapper, pointer) {
     MinisketchWrapper sketch_a(64, 0, 5);
     MinisketchWrapper sketch_b(64, 0, 5);
-    sketch_a.AddUint("78150502233724948716633184648902415126");
+    std::string s = "3725983975344748476";
+    sketch_a.AddUint(s);
+    printf("%lld", std::stoull(s));
     sketch_a.Merge(sketch_b.This());
   }
 }

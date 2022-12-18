@@ -31,7 +31,7 @@ public:
     minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
   }
   void Merge(MinisketchWrapper *other_sketch) {
-    //minisketch_merge(sketch, other_sketch->sketch);
+    minisketch_merge(sketch, other_sketch->sketch);
   }
   val Decode() {
     uint64_t *buffer = new uint64_t[capacity + 1];
