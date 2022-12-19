@@ -13,6 +13,7 @@ export declare class Minisketch {
     constructor(binding: any);
     serialize(): Buffer;
     destroy(): void;
+    rebuild(): void;
     getPointer(): any;
-    addUint(i: String | Number): void;
+    addUint(i: any): void;
 }

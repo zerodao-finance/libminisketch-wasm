@@ -1,5 +1,7 @@
 import { Minisketch } from "../src.ts/minisketch";
 import { ethers } from "ethers";
+import { chunk } from "lodash";
+import { resolve } from "../src.ts/util";
 
 describe("bindings", () => {
   let sketch_a: Minisketch, sketch_b: Minisketch;
@@ -21,7 +23,9 @@ describe("bindings", () => {
     sketch_a.addUint("3002");
     sketch_b.addUint("3001");
     sketch_b.merge(sketch_a);
-    console.log(sketch_b.decode());
+    const decoded = chunk(sketch_b.decode(), 8);
+    const [length, hexed] = resolve(decoded);
+    console.log(hexed);
     const serialized = sketch_a.serialize();
   });
 });

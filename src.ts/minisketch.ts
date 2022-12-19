@@ -36,6 +36,10 @@ export class Minisketch {
   destroy() {
     this._binding.destroy();
   }
+  rebuild() {
+    this._binding.destroy();
+    this._binding.create();
+  }
   getPointer(): any {
     return this._binding.getPointer();
   }

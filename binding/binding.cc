@@ -10,6 +10,7 @@ using namespace emscripten;
 EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
   class_<MinisketchWrapper>("MinisketchWrapper")
     .constructor<int, int, int>()
+    .function("create", &MinisketchWrapper::Create)
     .function("addUint", &MinisketchWrapper::AddUint, allow_raw_pointers())
     .function("serialize", &MinisketchWrapper::Serialize)
     .function("destroySerialized", &MinisketchWrapper::DestroySerialized)

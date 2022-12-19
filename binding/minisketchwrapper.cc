@@ -13,6 +13,9 @@ public:
   void Destroy() {
     minisketch_destroy(sketch);
   }
+  void Create() {
+    sketch = minisketch_create(field_size, implementation_number, capacity);
+  }
   val Serialize() {
     size_t len = minisketch_serialized_size(sketch);
     last_serialized = (unsigned char *) malloc(len);
