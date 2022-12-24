@@ -1,20 +1,20 @@
 {
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "target": "es2020",
-        "noImplicitAny": false,
-        "esModuleInterop": true,
-        "sourceMap": true,
-        "outDir": "./lib",
-        "declaration": true,
-        "types": [
-            "node"
-        ]
-    },
-    "include": [
-        "./src.ts/*"
-    ]
+  "compilerOptions": {
+    "lib": ["ES2015", "es5", "dom"],
+    "preserveWatchOutput": true,
+    "pretty": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2015",
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "outDir": "./lib",
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "include": ["src.ts/*"],
+  "exclude": ["node_modules"]
 }

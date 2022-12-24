@@ -4,3 +4,6 @@
 [submodule "emsdk"]
 	path = emsdk
 	url = https://github.com/emscripten-core/emsdk
+[submodule "tests/googletest"]
+	path = tests/googletest
+	url = https://github.com/google/googletest
