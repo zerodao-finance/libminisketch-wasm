@@ -18,5 +18,6 @@ EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
     .function("merge", &MinisketchWrapper::Merge, allow_raw_pointers())
     .function("getPointer", &MinisketchWrapper::This, allow_raw_pointers())
     .function("decode", &MinisketchWrapper::Decode)
+    .function("len", &MinisketchWrapper::len)
     .function("destroy", &MinisketchWrapper::Destroy);
 }

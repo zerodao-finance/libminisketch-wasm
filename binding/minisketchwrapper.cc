@@ -16,12 +16,18 @@ public:
   void Create() {
     sketch = minisketch_create(field_size, implementation_number, capacity);
   }
-  val Serialize() {
+  std::string Serialize() {
     size_t len = minisketch_serialized_size(sketch);
-    last_serialized = (unsigned char *) malloc(len);
-    minisketch_serialize(sketch, last_serialized);
-    return val(typed_memory_view(len, last_serialized));
+    unsigned char* buffer_a = (unsigned char*) malloc(len);
+    minisketch_serialize(sketch, buffer_a);
+    std::string s(reinterpret_cast<char const*>(buffer_a), len);
+    return s;
   }
+
+  int len() {
+    return int(minisketch_serialized_size(sketch));
+  }
+
   void DestroySerialized() {
     if (last_serialized) free(last_serialized);
     last_serialized = (unsigned char *) 0;
