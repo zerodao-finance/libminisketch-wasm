@@ -11,7 +11,7 @@ export declare class Minisketch {
     merge(other: Minisketch): void;
     decode(): any;
     constructor(binding: any);
-    serialize(): Buffer;
+    serialize(): any;
     destroy(): void;
     rebuild(): void;
     getPointer(): any;
