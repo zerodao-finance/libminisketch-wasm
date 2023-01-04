@@ -19,6 +19,9 @@ export class Minisketch {
   deserialize(input: Buffer) {
     this._binding.deserialize(input.toString("ascii"));
   }
+  deserialze_pointer(other: Minisketch) {
+    this._binding.deserialize_pointer(other._binding.getPointer());
+  }
   merge(other: Minisketch) {
     this._binding.merge(other._binding.getPointer());
   }
@@ -29,9 +32,7 @@ export class Minisketch {
     this._binding = binding;
   }
   serialize() {
-    this._binding.destroySerialized();
-    const result = Buffer.from(Array.from(this._binding.serialize()) as any);
-    this._binding.destroySerialized();
+    const result = this._binding.serialize();
     return result;
   }
   destroy() {

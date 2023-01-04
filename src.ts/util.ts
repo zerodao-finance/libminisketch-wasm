@@ -5,6 +5,10 @@ function _stripZeros(a: Uint8Array) {
   return stripZeros(a.reverse());
 }
 
+export function cast(a: string) {
+  console.log(a);
+}
+
 export function resolve(arr: number[][]): [length: number, res: string[]] {
   let res = arr.map((d) => {
     const v = hexlify(_stripZeros(new Uint8Array(d)));

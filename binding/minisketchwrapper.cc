@@ -4,6 +4,7 @@
 #include "../minisketch/include/minisketch.h"
 
 using namespace emscripten;
+using namespace std;
 
 class MinisketchWrapper {
 public:
@@ -16,27 +17,34 @@ public:
   void Create() {
     sketch = minisketch_create(field_size, implementation_number, capacity);
   }
-  std::string Serialize() {
+  val Serialize() {
     size_t len = minisketch_serialized_size(sketch);
-    unsigned char* buffer_a = (unsigned char*) malloc(len);
-    minisketch_serialize(sketch, buffer_a);
-    std::string s(reinterpret_cast<char const*>(buffer_a), len);
-    return s;
+    this->DestroySerialized();
+    last_serialized = (unsigned char*) malloc(len);
+    minisketch_serialize(sketch, last_serialized);
+    return val(typed_memory_view(len, (unsigned int *)last_serialized));
   }
 
   int len() {
     return int(minisketch_serialized_size(sketch));
   }
-
+  void Deserialize_Sketch(MinisketchWrapper *other) {
+    size_t len = minisketch_serialized_size(other->sketch);
+    unsigned char* buffer_a = (unsigned char*) malloc(len);
+    minisketch_serialize(other->sketch, buffer_a);
+    string s = string(reinterpret_cast<char*>(buffer_a), len);
+    minisketch_deserialize(sketch, (unsigned char*) s.c_str());
+    free(buffer_a);
+  }
   void DestroySerialized() {
     if (last_serialized) free(last_serialized);
     last_serialized = (unsigned char *) 0;
   }
-  void AddUint(std::string s) {
-     unsigned long long i = std::stoull(s);
+  void AddUint(string s) {
+     unsigned long long i = stoull(s);
      minisketch_add_uint64(sketch, i);
   }
-  void Deserialize(std::string serialized) {
+  void Deserialize(string serialized) {
     minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
   }
   void Merge(MinisketchWrapper *other_sketch) {

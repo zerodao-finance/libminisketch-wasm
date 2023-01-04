@@ -7,7 +7,12 @@ namespace {
   TEST(minisketchWrapper, pointer) {
     MinisketchWrapper sketch_a(64, 0, 5);
     MinisketchWrapper sketch_b(64, 0, 5);
-    std::string s = "3725983975344748476";
+    std::string s = "3635997626484733025";
+
+    sketch_a.AddUint(s);
+    s = "7971146234939396866";
+    sketch_a.AddUint(s);
+    s = "12458989319354851725";
     sketch_a.AddUint(s);
     printf("%lld", std::stoull(s));
     sketch_a.Merge(sketch_b.This());

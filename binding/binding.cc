@@ -19,5 +19,6 @@ EMSCRIPTEN_BINDINGS(MinisketchWrapper) {
     .function("getPointer", &MinisketchWrapper::This, allow_raw_pointers())
     .function("decode", &MinisketchWrapper::Decode)
     .function("len", &MinisketchWrapper::len)
-    .function("destroy", &MinisketchWrapper::Destroy);
+    .function("destroy", &MinisketchWrapper::Destroy)
+    .function("deserialize_pointer", &MinisketchWrapper::Deserialize_Sketch, allow_raw_pointers());
 }
