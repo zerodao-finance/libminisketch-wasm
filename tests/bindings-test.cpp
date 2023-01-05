@@ -23,7 +23,7 @@ namespace {
     minisketch_serialize(sketch_a.sketch, buf);
     printf("\n");
     for(int i=0; i<len; i++){
-      printf("%d %d\n", i+1, (unsigned int) buf[i]);
+      printf("%d %llu\n", i+1, (uint64_t) buf[i]);
     }
 
     sketch_a.Merge(sketch_b.This());

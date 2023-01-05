@@ -24,12 +24,9 @@ public:
     if(last_serialized) free(last_serialized);
     last_serialized = (unsigned char*) 0;
     last_serialized = (unsigned char*) malloc(len);
+    memset(last_serialized, 0, len);
     minisketch_serialize(sketch, last_serialized);
-    unsigned int* ptr = (unsigned int*) malloc(len);
-    for(int i=0;i<len;i++)
-      ptr[i] = i+1;
-
-    return val(typed_memory_view(len, ptr));
+    return val(typed_memory_view(len, last_serialized));
   }
 
   int len() {
@@ -51,8 +48,10 @@ public:
      unsigned long long i = stoull(s);
      minisketch_add_uint64(sketch, i);
   }
-  void Deserialize(string serialized) {
-    minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
+  void Deserialize(val serialized) {
+    vector<unsigned char> v = vecFromJSArray<unsigned char>(serialized);
+    unsigned char *a = &v[0];
+    minisketch_deserialize(sketch, a);
   }
   void Merge(MinisketchWrapper *other_sketch) {
     minisketch_merge(sketch, other_sketch->sketch);

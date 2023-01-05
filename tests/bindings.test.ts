@@ -30,8 +30,8 @@ describe("bindings", () => {
     sketch_b.addUint(ethers.BigNumber.from(hash3).toString());
     const sketchSerialized = sketch_a.serialize();
     let sketch_c = await Minisketch.create({ fieldSize: 64, capacity: 5 });
-    cast(sketchSerialized);
-    sketch_c.deserialize(sketchSerialized);
+    cast(sketchSerialized as any);
+    sketch_c.deserialize(sketchSerialized as any);
     console.log(sketch_a._binding.len());
     sketch_b.merge(sketch_c);
     const decoded = chunk(sketch_b.decode(), 8);
