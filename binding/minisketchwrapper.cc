@@ -1,4 +1,5 @@
 #include <emscripten/val.h>
+#include <emscripten/trace.h>
 #include <string>
 #include <vector>
 #include "../minisketch/include/minisketch.h"
@@ -8,6 +9,7 @@ using namespace std;
 
 class MinisketchWrapper {
 public:
+  minisketch *sketch;
   MinisketchWrapper(int field_size_, int implementation_number_, int capacity_) : field_size(field_size_), implementation_number(implementation_number_), capacity(capacity_) {
     sketch = minisketch_create(field_size_, implementation_number_, capacity_);
   }
@@ -19,10 +21,12 @@ public:
   }
   val Serialize() {
     size_t len = minisketch_serialized_size(sketch);
-    this->DestroySerialized();
+    if(last_serialized) free(last_serialized);
+    last_serialized = (unsigned char*) 0;
     last_serialized = (unsigned char*) malloc(len);
+    memset(last_serialized, 0, len);
     minisketch_serialize(sketch, last_serialized);
-    return val(typed_memory_view(len, (unsigned int *)last_serialized));
+    return val(typed_memory_view(len, last_serialized));
   }
 
   int len() {
@@ -44,8 +48,10 @@ public:
      unsigned long long i = stoull(s);
      minisketch_add_uint64(sketch, i);
   }
-  void Deserialize(string serialized) {
-    minisketch_deserialize(sketch, (unsigned char *) serialized.c_str());
+  void Deserialize(val serialized) {
+    vector<unsigned char> v = vecFromJSArray<unsigned char>(serialized);
+    unsigned char *a = &v[0];
+    minisketch_deserialize(sketch, a);
   }
   void Merge(MinisketchWrapper *other_sketch) {
     minisketch_merge(sketch, other_sketch->sketch);
@@ -64,6 +70,5 @@ private:
   int field_size;
   int implementation_number;
   int capacity;
-  minisketch *sketch;
   unsigned char *last_serialized;
 };

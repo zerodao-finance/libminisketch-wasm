@@ -17,7 +17,7 @@ export class Minisketch {
     );
   }
   deserialize(input: Buffer) {
-    this._binding.deserialize(input.toString("ascii"));
+    this._binding.deserialize(input);
   }
   deserialze_pointer(other: Minisketch) {
     this._binding.deserialize_pointer(other._binding.getPointer());
