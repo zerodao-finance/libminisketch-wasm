@@ -8,6 +8,7 @@ export declare class Minisketch {
         capacity: any;
     }): Promise<Minisketch>;
     deserialize(input: Buffer): void;
+    deserialze_pointer(other: Minisketch): void;
     merge(other: Minisketch): void;
     decode(): any;
     constructor(binding: any);

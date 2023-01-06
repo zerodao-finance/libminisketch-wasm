@@ -15,9 +15,7 @@ export function resolve(arr: number[][]): [length: number, res: string[]] {
     if (v == "0x") return "0";
     else return BigNumber.from(v).toString();
   });
-  console.log(res);
   const length = Number(res.splice(res.length - 1)[0]);
-  console.log(length);
   if (length > 0) {
     res = res.slice(0, length);
   }
