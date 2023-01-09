@@ -21,8 +21,6 @@ public:
   }
   val Serialize() {
     size_t len = minisketch_serialized_size(sketch);
-    if(last_serialized) free(last_serialized);
-    last_serialized = (unsigned char*) 0;
     last_serialized = (unsigned char*) malloc(len);
     memset(last_serialized, 0, len);
     minisketch_serialize(sketch, last_serialized);
