@@ -42,9 +42,8 @@ public:
     if (last_serialized) free(last_serialized);
     last_serialized = (unsigned char *) 0;
   }
-  void AddUint(string s) {
-     unsigned long long i = stoull(s);
-     minisketch_add_uint64(sketch, i);
+  void AddUint(int i) {
+     minisketch_add_uint64(sketch, (uint64_t) i);
   }
   void Deserialize(val serialized) {
     vector<unsigned char> v = vecFromJSArray<unsigned char>(serialized);
